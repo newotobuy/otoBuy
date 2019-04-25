@@ -41,7 +41,7 @@ app.post('/register',(req,res) => {
         password: req.body.password,
         role: 'customer'
     }
-    console.log(req.body.firstName) 
+    // console.log(req.body.firstName) 
     User.create(user)
     .then(success=>{
         req.session.isLogin = true

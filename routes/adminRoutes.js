@@ -1,7 +1,9 @@
 const Models = require('../models')
 // const Teachers = Models.Teacher
+const Transaction = Models.Transactions
 const User = Models.Users
 const Item = Models.Items
+const Category = Models.Categories
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
@@ -16,9 +18,9 @@ router.post("/", (req, res) => {
         username: req.body.email
     }})
     .then(user => {
-        // req.session.isLogin = true
-        // req.session.items = []
-        // req.session.id = user.id
+        req.session.isLogin = true
+        req.session.items = []
+        req.session.id = user.id
         if(user){ 
             bcrypt.compare(req.body.password, user.password, function(err, loginOK) {
                 if(loginOK === true){
@@ -51,6 +53,12 @@ router.get("/admin", (req, res) => {
         res.send(err)
     })
 })
+
+// router.get("/admin", (req, res) => {
+//     Item.findAll({
+//         include : [Uuse]
+//     })
+// })
 
 /* ================================update=================================== */
 
@@ -121,5 +129,32 @@ router.post ("/add", (req, res) => {
     })
 })
 
+/* ============================= chart =========================== */
+
+router.get("/chart" , (req, res) => {
+    Item.findAll({
+        include : [Category]
+    })
+    .then(itemwithCategory => {
+        res.send(itemwithCategory)
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
+
+/* =============================log out =========================== */
+
+router.get("/logout", (res, req) => {
+    req.session.isLogin = false
+    req.session.items = []
+    req.session.id = user.id
+    .then(logoutOK => {
+        res.redirect("/")
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
 
 module.exports = router
