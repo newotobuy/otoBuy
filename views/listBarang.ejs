@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+        <%- include('./partials/head.ejs')%>
 </head>
 <body>
+        <%- include('./partials/navbar-cust.ejs')%>
     <h1>List Item</h1>
 
     <table style="width:100%">
@@ -23,7 +21,7 @@
                 <td><%=item.price%></td>
                 <td><%=item.stock%></td>
                 <td><%=item.category%></td>
-                <td><a href="/otobuy/update/<%=item.id%>">update item</a> || <a href="/otobuy/delete/<%=item.id%>">delete item</a></td>
+                <td><a href="/otobuy/update/<%=item.id%>">update item</a> || <a href="/otobuy/delete/<%=item.id%>" onclick="return confirm('are you sure?')">delete item</a></td>
             </tr>
         <% }) %>
     </table>
