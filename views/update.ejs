@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit data List Item</h1>
+
+        <form action="/otobuy/update/<%= foundToUpdate.id %>" method="POST">
+            <label for="item_name">Nama Item</label>
+            <input type="text" name="item_name" value="<%= foundToUpdate.item_name %>">
+            <label for="price">Price</label>
+            <input type="text" name="item_price" value="<%= foundToUpdate.price %>">
+            <label for="stock">Stock</label>
+            <input type="number" name="item_stock" value="<%= foundToUpdate.stock %>">
+            <button type="submit">Update</button>
+        </form>
+</body>
+</html>
