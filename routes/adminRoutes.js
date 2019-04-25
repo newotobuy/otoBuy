@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
                     if(user.role === 'admin'){
                         res.redirect("/otobuy/admin")
                     }else{
-                        res.redirect("/otobuy/customer")
+                        res.redirect("/otobuy/customer/home")
                     }
                 }else{
                     res.send('salah masuk')
@@ -130,31 +130,53 @@ router.post ("/add", (req, res) => {
 })
 
 /* ============================= chart =========================== */
+//belom bisa 
 
-router.get("/chart" , (req, res) => {
-    Item.findAll({
-        include : [Category]
-    })
-    .then(itemwithCategory => {
-        res.send(itemwithCategory)
-    })
-    .catch(err => {
-        res.send(err)
-    })
-})
+// router.get("/chart" , (req, res) => {
+//     Transaction.findAll({
+//         include : [{
+//             model : Item, 
+//             include : [{
+//                 model : Category
+//             }]
+//         }]
+//     })
+//     .then(itemwithCategory => {
+//         res.send(itemwithCategory)
+//     })
+//     .catch(err => {
+//         res.send(err)
+//     })
+// })
+
+// router.get("/chart", (req, res) => {
+//     Item.findAll({
+//         include : Category
+//     })
+//     .then(ygDibeli => {
+//         res.send(ygDibeli)
+//     })
+//     .catch(err => {
+//         res.send(err)
+//     })
+// })
 
 /* =============================log out =========================== */
 
+// router.get("/logout", (res, req) => {
+//     req.session.isLogin = false
+//     req.session.items = []
+//     req.session.id = user.id
+//     .then(logoutOK => {
+//         res.redirect("/")
+//     })  
+//     .catch(err => {
+//         res.send(err)
+//     })
+// })
+
 router.get("/logout", (res, req) => {
-    req.session.isLogin = false
-    req.session.items = []
-    req.session.id = user.id
-    .then(logoutOK => {
-        res.redirect("/")
-    })
-    .catch(err => {
-        res.send(err)
-    })
+    res.redirect("/")
 })
 
 module.exports = router

@@ -8,10 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Item.associate = function(models) {
     // associations can be defined here
-    Item.belongsToMany(models.Users,{
-      through: "Transactions",
-      foreignKey: "item_id"
-    })
+    Item.belongsTo(models.Categories, {foreignKey: 'category_id'})
+    Item.hasMany(models.Transactions, {foreignKey: 'item_id'})
    };
   return Item;
 };

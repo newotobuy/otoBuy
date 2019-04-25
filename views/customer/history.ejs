@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('../partials/head.ejs')%>
+        <title>History</title>
+    </head>
+    <body>
+        <%- include('../partials/navbar-cust.ejs')%>
+        <h3>History Transactions</h3>
+
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Date</th>
+                <th>Total Transactions</th>
+
+            </tr>
+            <% for(let i=0; i<transactions.length; i++){ %>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><%= getFormatDate(transactions[i].createdAt) %></td>
+                    <td><%= transactions[i].total_price%></td>
+                    
+                </tr>
+            <% } %>
+        </table>
+       
+    </body>
+</html>
