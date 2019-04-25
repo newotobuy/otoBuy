@@ -7,7 +7,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/admin", Admin)
+app.use("/otobuy", Admin)
 
 // app.get('/', function(req, res) {
 //     res.send('test')
