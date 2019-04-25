@@ -1,0 +1,30 @@
+{
+  "name": "otobuy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newotobuy/otoBuy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newotobuy/otoBuy/issues"
+  },
+  "homepage": "https://github.com/newotobuy/otoBuy#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "connect-session-sequelize": "^6.0.0",
+    "bcrypt-nodejs": "0.0.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "pg": "^7.10.0",
+    "sequelize": "^5.7.5"
+  }
+}
