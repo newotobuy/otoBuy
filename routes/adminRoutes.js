@@ -175,8 +175,13 @@ router.post ("/add", (req, res) => {
 //     })
 // })
 
-router.get("/logout", (res, req) => {
-    res.redirect("/")
+// router.get("/logout", (res, req) => {
+//     res.redirect("/")
+// })
+router.get("/logout", (req, res) => {
+    req.session.destroy()
+    res.redirect("/otobuy")
+    
 })
 
 module.exports = router
