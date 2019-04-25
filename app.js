@@ -6,6 +6,8 @@ var session = require('express-session')
 const Model= require('./models')
 const User= Model.Users
 const customerRoute= require('./routes/customerRoute')
+const session = require('express-session')
+const loginRoutes = require('./routes/adminRoutes')
 
 app.use(express.urlencoded({extended:false}))
 var sess = {
@@ -23,6 +25,8 @@ app.use((req, res, next)=>{
     console.log(req.session)
     next()
 })
+app.use(express.json())
+app.set('view engine','ejs')
 
 app.get('/register',(req,res)=>{
        res.render("register.ejs",{
@@ -47,12 +51,11 @@ app.post('/register',(req,res) => {
          res.redirect('otobuy/customer/home')
     })
     .catch(err=>{
-        res.send(err.message)
-        
+        res.send(err.message)        
     })
  })
 
  app.use('/otobuy/customer', customerRoute)
-
+ app.use("/otobuy",loginRoutes)
 
 app.listen(port, ()=>{console.log(`Running in port ${port}...... `)})
