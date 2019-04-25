@@ -1,6 +1,8 @@
 var express = require('express')
 var app = express()
 var port = 3000
+var session = require('express-session')
+
 const Model= require('./models')
 const User= Model.Users
 const customerRoute= require('./routes/customerRoute')
@@ -8,29 +10,28 @@ const session = require('express-session')
 const loginRoutes = require('./routes/adminRoutes')
 
 app.use(express.urlencoded({extended:false}))
-app.use(express.json())
-app.set('view engine', 'ejs')
-
-// app.use(session({
-//     secret: 'keyboard cat',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: true }
-//   }))
 var sess = {
-    secret : 'otobuy',
-    cookcie: {},
+    secret: 'otobuy',
+    cookie: {}, 
     islogin: false,
-    items: []
-}
-
+    userId:0,
+    saveUninitialized: true,
+    resave: true
+  }
 app.use(session(sess))
 
-
-app.use("/otobuy", loginRoutes)
+app.use((req, res, next)=>{
+    console.log('debug session');
+    console.log(req.session)
+    next()
+})
+app.use(express.json())
+app.set('view engine','ejs')
 
 app.get('/register',(req,res)=>{
-    res.render("register.ejs")
+       res.render("register.ejs",{
+        error: req.query.errorMsg || null
+    })
 })
 
 app.post('/register',(req,res) => {
@@ -41,22 +42,20 @@ app.post('/register',(req,res) => {
         password: req.body.password,
         role: 'customer'
     }
-    console.log(req.body.firstName) 
+    
     User.create(user)
-    .then(success=>{
-        req.session.isLogin = true
-        req.session.items = []
-        req.session.id = user.id
-        res.redirect('/customer/home')
+    .then(user=>{
+         req.session.islogin= true
+         req.session.userId= user.id
+        
+         res.redirect('otobuy/customer/home')
     })
     .catch(err=>{
-        let error= err.error
-        res.redirect(`/register?errorMsg=${error}`)
-        //res.send(err.message) 
+        res.send(err.message)        
     })
  })
 
- app.use('/customer', customerRoute)
-
+ app.use('/otobuy/customer', customerRoute)
+ app.use("/otobuy",loginRoutes)
 
 app.listen(port, ()=>{console.log(`Running in port ${port}...... `)})
