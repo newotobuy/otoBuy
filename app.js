@@ -1,15 +1,16 @@
 var express = require('express')
 var app = express()
 var port = 3000
-// var session = require('express-session')
+var session = require('express-session')
 
 const Model= require('./models')
 const User= Model.Users
 const customerRoute= require('./routes/customerRoute')
-const session = require('express-session')
 const loginRoutes = require('./routes/adminRoutes')
 
 app.use(express.urlencoded({extended:false}))
+app.use(express.static(__dirname + '/views'));
+
 var sess = {
     secret: 'otobuy',
     cookie: {}, 

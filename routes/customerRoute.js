@@ -1,20 +1,28 @@
 const router= require('express').Router()
 const Model= require('../models')
 const getFormatDate= require('../helpers/getFormatDate')
+const getFormatRupiah= require('../helpers/getFormatRupiah')
 const User= Model.Users
 const Items= Model.Items
 const Transaction= Model.Transactions
 const Categories= Model.Categories
 
 router.get('/home',(req, res)=>{
-    console.log(req.session)
+    console.log(req.body,'====')
     Items.findAll({
-        include: [Categories]
+        include: [Categories],
+        // where:{
+        //     item_price :{
+        //         $Between:[Number(req.body.minPrice), Number(req.body.maxPrice)]
+        //     }
+        // }
     })
     .then(items=>{
-        //res.send(req.session)
+        
         res.render("./customer/home.ejs",{
-            items:items
+            items:items,
+            categories: items.Category,
+            getFormatRupiah:getFormatRupiah
         })
     })
     .catch(err=>{
@@ -57,33 +65,31 @@ router.post('/home',(req, res)=>{
             })
             .catch(err=>{
                 res.send(err.message)
-            })
-            
+            })            
         }
-    }
-    
+    }    
 })
 
 router.get('/history',(req, res)=>{
     let currentUser= req.session.userId
-    console.log(currentUser,'currentUser!!')
-
-    User.findByPk(currentUser,{
-        include: {
-            model: Transaction
-        }
-    })
-    .then(data=>{
-        console.log(data.Transactions,'=======')
-        console.log(data.Transactions.createdAt,'created!!!!!')
-        res.render("./customer/history.ejs",{
-            transactions: data.Transactions,
-            getFormatDate: getFormatDate
+    if(currentUser== undefined){
+        res.send('No Session Anymore')
+    }else{
+        User.findByPk(currentUser,{
+            include: {
+                model: Transaction
+            }
         })
-    })
-    .catch(err=>{
-        res.send(err)
-    })
+        .then(data=>{
+            res.render("./customer/history.ejs",{
+                transactions: data.Transactions,
+                getFormatDate: getFormatDate,
+                getFormatRupiah:getFormatRupiah
+            })
+        })
+        .catch(err=>{
+            res.send(err)
+        })    }    
 })
 
 

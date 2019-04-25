@@ -27,6 +27,7 @@ router.post("/", (req, res) => {
                     if(user.role === 'admin'){
                         res.redirect("/otobuy/admin")
                     }else{
+                        req.session.userId= user.id
                         res.redirect("/otobuy/customer/home")
                     }
                 }else{
