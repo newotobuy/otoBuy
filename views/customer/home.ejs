@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%- include('./partials/head.ejs')%>
+        <%- include('../partials/head.ejs')%>
     </head>
     <body>
-        <%- include('./partials/navbar-cust.ejs')%>
-         <table id="listItemCustomer">
-            <td>
-                <th>Car Name</th>
-                <th>Category</th>
-                <th>Amount Buying</th>
-                <th>Action</th>
-            </td>
-        </table>
+        <%- include('../partials/navbar-cust.ejs')%>
+        <h3>Choose Your Item</h3>
+        <form method="POST">
+
+            <table id="listItemCustomer">
+                <tr>
+                    <th>Car Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Amount Buying</th>
+                   
+                </tr>
+                <% items.forEach(item => { %>
+                    
+                    <tr>
+                        <td> <%= item.item_name %> <input type="hidden" name="item_id[]" value="<%= item.id %>" ></td>
+                        <td> <%= item.price %> <input type="hidden" name="item_price[]" value="<%= item.price %>" ></td>
+                        <td> <%= item.Category.category_name %> <input type="hidden" name="item_categories[]" value="<%= item.Category.id %>" ></td></td>
+                        <td> <input type="number" name="amount[]" min="1"> </td>
+                    </tr>
+                <% })%>
+            </table>
+
+            <input type="submit" value="Buy">
+        </form>
     </body>
 </html>

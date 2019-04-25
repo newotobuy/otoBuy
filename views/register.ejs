@@ -5,6 +5,9 @@
         <title>Register Account</title>
     </head>
     <body>
+        <% if(error) { %>
+        <h5><%- error %></h5>
+        <% } %>
         <form id="login" method="POST" action="/register">
             <label for="firstName">First Name: </label>
             <input type="text" name="firstName"><br>
