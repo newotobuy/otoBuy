@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <%- include('./partials/head.ejs')%>
+</head>
+<body>
+        <%- include('./partials/navbar-cust.ejs')%>
+    <h1>List Item</h1>
+
+    <table style="width:100%">
+        <tr>
+            <th>Item name</th>
+            <th>Price</th> 
+            <th>Stock</th>
+            <th>Category</th>
+            <th>Option</th>
+        </tr>
+        <% dataList.forEach(item => { %>
+            <tr>
+                <td><%=item.item_name%></td>
+                <td><%=item.price%></td>
+                <td><%=item.stock%></td>
+                <td><%=item.category%></td>
+                <td><a href="/otobuy/update/<%=item.id%>">update item</a> || <a href="/otobuy/delete/<%=item.id%>" onclick="return confirm('are you sure?')">delete item</a></td>
+            </tr>
+        <% }) %>
+    </table>
+    <br><br><br>
+    <button><a href="/otobuy/add">Add Item</a></button>
+</body>
+</html>
